@@ -1,6 +1,6 @@
 import { Component, FormEvent, ReactNode } from "react";
 import { User } from "../../App";
-import { verifyUser } from "../../Helpers";
+import { HOST_URL, verifyUser } from "../../Helpers";
 
 type LoginProps = {
     onLoginSucces: (u: User) => void
@@ -8,28 +8,29 @@ type LoginProps = {
 
 export class Login extends Component<LoginProps> {
 
-    onSubmit(e: FormEvent<HTMLFormElement>) {
+    async onSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         const formdata = new FormData(e.currentTarget);
-        const body = JSON.stringify({
+        const body = {
             phone_number: formdata.get("phone"),
             password: formdata.get("password")
-        });
+        };
 
-        fetch("http://localhost:8000/login", {
+        const response = await fetch(`${HOST_URL}/login`, {
             method: "POST",
             headers: {
                 "content-type": "application/json"
             },
-            body: body
-        })
-            .then(res => res.json())
-            .then(res => {
-                const token = res.token;
-                verifyUser(token, (u) => this.props.onLoginSucces(u));
-            })
-            .catch(err => console.log(err));
+            body: JSON.stringify(body)
+        });
+
+        if (response.ok) {
+            const token = (await response.json()).token;
+            verifyUser(token, u => this.props.onLoginSucces(u));
+        } else if (response.status == 401) {
+            alert("Invalid credentials. Please try again");
+        }
     }
 
     render(): ReactNode {
