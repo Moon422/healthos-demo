@@ -1,9 +1,14 @@
 import { Component, ReactNode } from "react";
+import { User } from "../../App";
 import { Login } from "./Login";
 import { Registration } from "./registration";
 import "./style.css";
 
-export class Auth extends Component {
+type AuthProps = {
+    onAuthSuccess: (u: User) => void;
+};
+
+export class Auth extends Component<AuthProps> {
     render(): ReactNode {
         return (
             <>
@@ -13,7 +18,7 @@ export class Auth extends Component {
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div className="p-2 pr-4">
                             <h2>Login</h2>
-                            <Login />
+                            <Login onLoginSucces={(u) => this.props.onAuthSuccess(u)} />
                         </div>
                         <div className="p-2 pl-4">
                             <h2>Create a New Account</h2>
