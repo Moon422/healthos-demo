@@ -9,4 +9,5 @@ At this moment, backend is not implemented. To run and view the project project,
 <code>npm start</code>
 
 <h3>Login/Registration Page</h3>
-<img src="https://user-images.githubusercontent.com/90880886/209078661-eb9fa67f-f730-4abe-b4bb-b5b96fb79388.png" />
+
+![Screenshot 2022-12-22 at 13-17-11 React App](https://user-images.githubusercontent.com/90880886/209190095-6cdddba8-98f9-4483-ab4b-0ae03f895c5f.png)
