@@ -30,24 +30,6 @@ export class Login extends Component<LoginProps> {
                 verifyUser(token, (u) => this.props.onLoginSucces(u));
             })
             .catch(err => console.log(err));
-
-        // if (response.ok) {
-        //     response.json()
-        //         .then(res => {
-        //             const token = res.token;
-        //             fetch("http://localhost:8000/verify", {
-        //                 headers: {
-        //                     "authorization": `Bearer ${token}`
-        //                 },
-        //                 method: "GET"
-        //             })
-        //                 .then(res => res.json())
-        //                 .then(res => console.log(res))
-        //                 .catch(err => console.log(err));
-
-        //         })
-        //         .catch(err => console.log(err));
-        // }
     }
 
     render(): ReactNode {
