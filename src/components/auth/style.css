@@ -1,7 +1,0 @@
-input {
-    @apply w-full mb-2
-}
-
-#login-btn {
-    @apply bg-sky-500 rounded py-0.5 font-bold cursor-pointer text-offwhite
-}
