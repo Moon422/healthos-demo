@@ -17,7 +17,7 @@ export async function verifyUser(token: string, callback: (u: User) => void) {
             ...(await response.json()),
             token
         };
-        console.log(user);
+        callback(user);
     } else {
         alert("Token not verfied");
     }

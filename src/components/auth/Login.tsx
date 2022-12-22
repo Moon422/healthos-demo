@@ -28,7 +28,7 @@ export class Login extends Component<LoginProps> {
         if (response.ok) {
             const token = (await response.json()).token;
             verifyUser(token, u => this.props.onLoginSucces(u));
-        } else if (response.status == 401) {
+        } else if (response.status === 401) {
             alert("Invalid credentials. Please try again");
         }
     }
