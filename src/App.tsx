@@ -33,7 +33,6 @@ class App extends Component<{}, AppState> {
 	}
 
 	onTokenVeried(_user: User): void {
-		// this.user = user;
 		this.setState({
 			user: _user
 		});
@@ -42,7 +41,8 @@ class App extends Component<{}, AppState> {
 
 	render(): React.ReactNode {
 		if (this.state.user) {
-			return <h1>Logged in</h1>
+			const name = `${this.state.user.firstName} ${this.state.user.lastName}`;
+			return <h1>Logged in as {name}</h1>
 		}
 		return (
 			<>

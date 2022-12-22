@@ -1,9 +1,45 @@
-import { Component, ReactNode } from "react";
+import { Component, FormEvent, ReactNode } from "react";
+import { User } from "../../App";
+import { HOST_URL, verifyUser } from "../../Helpers";
 
-export class Registration extends Component {
+type RegistrationProps = {
+    onRegistrationSuccess: (u: User) => void;
+}
+
+export class Registration extends Component<RegistrationProps> {
+    async onSubmit(e: FormEvent<HTMLFormElement>): Promise<void> {
+        e.preventDefault();
+
+        const formdata = new FormData(e.currentTarget);
+        const body = {
+            first_name: formdata.get("firstname"),
+            last_name: formdata.get("lastname"),
+            auth: {
+                phone_number: formdata.get("rg-phone"),
+                password: formdata.get("rg-password")
+            }
+        };
+
+        const url = `${HOST_URL}/register`;
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (response.ok) {
+            const token = (await response.json()).token;
+            verifyUser(token, u => this.props.onRegistrationSuccess(u));
+        } else {
+            alert("Error while creating user");
+        }
+    }
+
     render(): ReactNode {
         return (
-            <form>
+            <form onSubmit={(e) => this.onSubmit(e)}>
                 <div className="columns-2">
                     <label htmlFor="firstname">First Name:</label><br />
                     <input type="text" name="firstname" id="firstname" placeholder="First Name" className="form-input mb-2" /><br />

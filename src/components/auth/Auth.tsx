@@ -22,7 +22,7 @@ export class Auth extends Component<AuthProps> {
                         </div>
                         <div className="p-2 pl-4">
                             <h2>Create a New Account</h2>
-                            <Registration />
+                            <Registration onRegistrationSuccess={(u) => this.props.onAuthSuccess(u)} />
                         </div>
                     </div>
                 </div>
