@@ -3,8 +3,6 @@ import { User } from "./App";
 export const HOST_URL = "http://localhost:8000";
 
 export async function verifyUser(token: string, callback: (u: User) => void) {
-    console.log(token);
-
     const response = await fetch(`${HOST_URL}/verify`, {
         headers: {
             "authorization": `Bearer ${token}`
@@ -13,8 +11,12 @@ export async function verifyUser(token: string, callback: (u: User) => void) {
     });
 
     if (response.ok) {
+        const payload = await response.json();
+
         const user: User = {
-            ...(await response.json()),
+            firstName: payload.first_name,
+            lastName: payload.last_name,
+            userType: payload.user_type,
             token
         };
         callback(user);
