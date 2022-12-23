@@ -1,7 +1,12 @@
-import { Component, ReactNode } from "react";
+import { Component, ReactNode, MouseEvent as ReactMouseEvent } from "react";
 import { User } from "../../App";
 
-export class UserDashboard extends Component<{ user: User }> {
+export class UserDashboard extends Component<{ user: User, logoutCallback: () => void }> {
+    onLogoutBtnClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
+        e.preventDefault();
+        this.props.logoutCallback();
+    }
+
     render(): ReactNode {
         return (
             <>
@@ -12,7 +17,7 @@ export class UserDashboard extends Component<{ user: User }> {
                             <div className="my-auto">
                                 Logged in as {this.props.user.firstName + " " + this.props.user.lastName}
                             </div>
-                            <button className="logout-btn">
+                            <button onClick={e => this.onLogoutBtnClicked(e)} className="logout-btn">
                                 Logout
                             </button>
                         </div>

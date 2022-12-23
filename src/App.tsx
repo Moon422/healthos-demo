@@ -40,10 +40,17 @@ class App extends Component<{}, AppState> {
 		localStorage.setItem(tokenKey, _user.token);
 	}
 
+	logout(): void {
+		localStorage.removeItem(tokenKey);
+		this.setState({
+			user: undefined
+		});
+	}
+
 	render(): React.ReactNode {
 		if (this.state.user) {
 			if (this.state.user.userType === UserTypes.NORMAL) {
-				return <UserDashboard user={this.state.user} />
+				return <UserDashboard user={this.state.user} logoutCallback={() => this.logout()} />
 			} else {
 
 			}
