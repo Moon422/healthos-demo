@@ -43,3 +43,7 @@ h2 {
 .logout-btn {
   @apply bg-red-500 rounded-full p-1 font-bold cursor-pointer text-offwhite px-6
 }
+
+.menu-item-active {
+  @apply font-bold border-b-slate-600;
+}
