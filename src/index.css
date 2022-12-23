@@ -45,5 +45,5 @@ h2 {
 }
 
 .menu-item-active {
-  @apply font-bold border-b-slate-600;
+  @apply font-bold border-b-4 border-b-slate-600;
 }
