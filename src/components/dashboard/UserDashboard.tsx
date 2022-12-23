@@ -1,15 +1,13 @@
 import { Component, ReactNode, MouseEvent as ReactMouseEvent } from "react";
+import { JsxElement } from "typescript";
 import { User } from "../../App";
+import { loadProducts } from "../../Helpers";
 
 enum MenuItems {
     PRODUCTS, CART
 }
 
-class UserNav extends Component<{ user: User, logoutCallback: () => void }, { selectedMenu: MenuItems }> {
-    state: { selectedMenu: MenuItems } = {
-        selectedMenu: MenuItems.PRODUCTS
-    }
-
+class UserNav extends Component<{ user: User, logoutCallback: () => void, selectedItem: MenuItems, selectedItemChanged: (item: MenuItems) => void }> {
     onLogoutBtnClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
         e.preventDefault();
         this.props.logoutCallback();
@@ -18,9 +16,7 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void }, { se
     onMenuItemClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>, menuItem: MenuItems): void {
         e.preventDefault();
         console.log("clicked");
-        this.setState({
-            selectedMenu: menuItem
-        });
+        this.props.selectedItemChanged(menuItem);
     }
 
     render(): ReactNode {
@@ -31,7 +27,7 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void }, { se
 
         const menuItemElements = menuItems.map((item, idx) => (
             <button onClick={e => this.onMenuItemClicked(e, item.itemType)} key={idx}
-                className={`hover:cursor-pointer hover:font-bold ${item.itemType === this.state.selectedMenu ? "menu-item-active" : ""}`}>
+                className={`hover:cursor-pointer hover:font-bold ${item.itemType === this.props.selectedItem ? "menu-item-active" : ""}`}>
                 {item.text}
             </button>
         ));
@@ -57,6 +53,28 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void }, { se
     }
 }
 
+class ProductList extends Component<{ user: User }> {
+    async loadProducts(view: MenuItems) {
+        if (view === MenuItems.PRODUCTS) {
+            try {
+                const products = await loadProducts(this.props.user.token);
+
+                if (products) {
+
+                }
+            } catch {
+                alert("Loading products");
+            }
+        }
+    }
+
+    render(): ReactNode {
+        return (
+            <h1>Product list</h1>
+        )
+    }
+}
+
 export class UserDashboard extends Component<{ user: User, logoutCallback: () => void }, { currentView: MenuItems }> {
     state: { currentView: MenuItems } = {
         currentView: MenuItems.PRODUCTS
@@ -67,11 +85,32 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
         this.props.logoutCallback();
     }
 
+
+    onSelectedItemChanged(item: MenuItems): void {
+        this.setState({
+            currentView: item
+        });
+    }
+
     render(): ReactNode {
+        let mainContent: JSX.Element | undefined = undefined;
+
+        switch (this.state.currentView) {
+            case MenuItems.PRODUCTS:
+                mainContent = <ProductList user={this.props.user} />
+                break;
+
+            default:
+                mainContent = <h1>Cart</h1>;
+                break;
+        }
+
         return (
             <>
-                <UserNav user={this.props.user} logoutCallback={() => this.props.logoutCallback()} />
-
+                <UserNav selectedItemChanged={(item) => this.onSelectedItemChanged(item)} selectedItem={this.state.currentView} user={this.props.user} logoutCallback={() => this.props.logoutCallback()} />
+                <div className="container mx-auto">
+                    {mainContent}
+                </div>
             </>
         );
     }
