@@ -1,5 +1,4 @@
 import { Component, ReactNode, MouseEvent as ReactMouseEvent } from "react";
-import { JsxElement } from "typescript";
 import { User } from "../../App";
 import { loadProducts } from "../../Helpers";
 
@@ -53,24 +52,60 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void, select
     }
 }
 
-class ProductList extends Component<{ user: User }> {
-    async loadProducts(view: MenuItems) {
-        if (view === MenuItems.PRODUCTS) {
-            try {
-                const products = await loadProducts(this.props.user.token);
+type Product = {
+    id: number,
+    name: string,
+    description: string,
+    quantity: number,
+    price: number
+};
 
-                if (products) {
+class ProductListItem extends Component<{ product: Product }> {
+    render(): ReactNode {
+        return (
+            <div className="bg-slate-400 hover:cursor-pointer rounded-2xl p-4 mt-4 bg-opacity-25 hover:shadow-2xl hover:bg-opacity-60">
+                <div className="text-4xl py-6 text-center">{this.props.product.name}</div>
+                <div className="truncate">{this.props.product.description}</div>
+                <div>Stock: {this.props.product.quantity}</div>
+                <div>Price: ${this.props.product.price}</div>
+            </div>
+        )
+    }
+}
 
-                }
-            } catch {
-                alert("Loading products");
+class ProductList extends Component<{ user: User }, { products: Product[] }> {
+    state: { products: Product[] } = {
+        products: []
+    }
+
+    async componentDidMount(): Promise<void> {
+        await this.loadProducts();
+    }
+
+    async loadProducts() {
+        try {
+            const products = await loadProducts(this.props.user.token);
+
+            if (products) {
+                this.setState({
+                    products: products
+                });
             }
+        } catch {
+            alert("Loading products");
+
         }
     }
 
     render(): ReactNode {
         return (
-            <h1>Product list</h1>
+            <div className="container">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    {this.state.products.map((prod, idx) => {
+                        return <ProductListItem key={idx} product={prod} />
+                    })}
+                </div>
+            </div>
         )
     }
 }
