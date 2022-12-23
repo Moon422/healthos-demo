@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Auth } from './components/auth/Auth';
+import { UserDashboard } from './components/dashboard/UserDashboard';
 import { verifyUser } from './Helpers';
 
 enum UserTypes {
@@ -41,9 +42,13 @@ class App extends Component<{}, AppState> {
 
 	render(): React.ReactNode {
 		if (this.state.user) {
-			const name = `${this.state.user.firstName} ${this.state.user.lastName}`;
-			return <h1>Logged in as {name}</h1>
+			if (this.state.user.userType === UserTypes.NORMAL) {
+				return <UserDashboard user={this.state.user} />
+			} else {
+
+			}
 		}
+
 		return (
 			<>
 				<Auth onAuthSuccess={(u) => this.onTokenVeried(u)} />
