@@ -2,7 +2,7 @@ import { Component, ReactNode } from "react";
 import { User } from "../../App";
 import { Login } from "./Login";
 import { Registration } from "./registration";
-import "./style.css";
+// import "./style.css";
 
 type AuthProps = {
     onAuthSuccess: (u: User) => void;
