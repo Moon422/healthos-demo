@@ -1,4 +1,5 @@
 import { User } from "./App";
+import { CartItem } from "./components/dashboard/UserDashboard";
 
 export const HOST_URL = "https://6av79h.deta.dev";
 
@@ -43,4 +44,24 @@ export async function loadProducts(token: string) {
     }
 
     throw new Error("Error loading products");
+}
+
+export async function placeOrder(user: User, items: CartItem[]) {
+    const url = `${HOST_URL}/orders`;
+    console.log(JSON.stringify(items.map(i => i.product)));
+
+    var response = await fetch(url, {
+        headers: {
+            "content-type": "application/json",
+            "authorization": `Bearer ${user.token}`
+        },
+        method: "POST",
+        body: JSON.stringify(items.map(i => ({ productId: i.product.id, quantity: i.quanity })))
+    });
+
+    if (!response.ok) {
+        throw new Error("Something went wrong");
+    }
+
+    console.log(await response.json());
 }

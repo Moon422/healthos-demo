@@ -1,7 +1,7 @@
 import { url } from "inspector";
 import { Component, ReactNode, MouseEvent as ReactMouseEvent, FormEvent } from "react";
 import { User } from "../../App";
-import { loadProducts } from "../../Helpers";
+import { loadProducts, placeOrder } from "../../Helpers";
 
 enum MenuItems {
     PRODUCTS, CART
@@ -180,7 +180,7 @@ class ProductList extends Component<{ user: User, onProductAddToCart: (item: Car
     }
 }
 
-type CartItem = {
+export type CartItem = {
     product: Product,
     quanity: number
 };
@@ -205,9 +205,19 @@ class CartItemView extends Component<{ cartItem: CartItem, removeItem: (item: Ca
     }
 }
 
-class CartView extends Component<{ cartItems: CartItem[], removeItem: (item: CartItem) => void }> {
+class CartView extends Component<{ user: User, cartItems: CartItem[], removeItem: (item: CartItem) => void, clearCart: () => void }> {
     removeItem(item: CartItem): void {
         this.props.removeItem(item);
+    }
+
+    async onBtnClick(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): Promise<void> {
+        e.preventDefault();
+        try {
+            await placeOrder(this.props.user, this.props.cartItems);
+            this.props.clearCart();
+        } catch {
+            alert("Order not placed. Please try again.")
+        }
     }
 
     render(): ReactNode {
@@ -222,7 +232,7 @@ class CartView extends Component<{ cartItems: CartItem[], removeItem: (item: Car
                     }
                 </div>
                 <div className="relative">
-                    <button className="btn absolute right-0 w-1/4">Place Order</button>
+                    <button onClick={e => this.onBtnClick(e)} className="btn absolute right-0 w-1/4">Place Order</button>
                 </div>
             </>
         );
@@ -276,6 +286,12 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
         }
     }
 
+    clearCart(): void {
+        this.setState({
+            cartItems: []
+        });
+    }
+
     render(): ReactNode {
         let mainContent: JSX.Element | undefined = undefined;
 
@@ -285,7 +301,7 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
                 break;
 
             default:
-                mainContent = <CartView removeItem={item => this.removeItemFromCart(item)} cartItems={this.state.cartItems} />;
+                mainContent = <CartView clearCart={() => this.clearCart()} user={this.props.user} removeItem={item => this.removeItemFromCart(item)} cartItems={this.state.cartItems} />;
                 break;
         }
 
