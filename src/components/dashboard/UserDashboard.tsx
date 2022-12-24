@@ -185,30 +185,46 @@ type CartItem = {
     quanity: number
 };
 
-class CartItemView extends Component<{ cartItem: CartItem }> {
+class CartItemView extends Component<{ cartItem: CartItem, removeItem: (item: CartItem) => void }> {
+    onBtnClick(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
+        e.preventDefault();
+        this.props.removeItem(this.props.cartItem);
+    }
+
     render(): ReactNode {
         return (
             // <h1>{`${this.props.cartItem.product.name} ${this.props.cartItem.quanity}`}</h1>
             <>
                 <div className="col-span-8 border-2 border-t-0 border-slate-700 p-2">{this.props.cartItem.product.name}</div>
                 <div className="bg-slate-600 p-2 text-right border-b-2 border-slate-700 text-white">{this.props.cartItem.quanity}</div>
-                <div className="bg-slate-600 p-2 border-2 border-t-0 border-slate-700 text-white"><button className="btn w-full">Remove</button></div>
+                <div className="bg-slate-600 p-2 border-2 border-t-0 border-slate-700 text-white">
+                    <button onClick={(e) => this.onBtnClick(e)} className="btn w-full">Remove</button>
+                </div>
             </>
         )
     }
 }
 
-class CartView extends Component<{ cartItems: CartItem[] }> {
+class CartView extends Component<{ cartItems: CartItem[], removeItem: (item: CartItem) => void }> {
+    removeItem(item: CartItem): void {
+        this.props.removeItem(item);
+    }
+
     render(): ReactNode {
         return (
-            <div className="grid grid-cols-10 my-2">
-                <div className="text-center my-auto p-2 col-span-8 bg-slate-400 border-2 border-slate-700 rounded-tl-lg">Name of Product</div>
-                <div className="text-center my-auto p-2 bg-slate-400 border-t-2 border-b-2 border-slate-700">Quantity</div>
-                <div className="text-center my-auto p-2 bg-slate-400 border-2 border-slate-700 rounded-tr-lg">Action</div>
-                {
-                    this.props.cartItems.map((item, idx) => <CartItemView key={idx} cartItem={item} />)
-                }
-            </div>
+            <>
+                <div className="grid grid-cols-10 my-2">
+                    <div className="text-center my-auto p-2 col-span-8 bg-slate-400 border-2 border-slate-700 rounded-tl-lg">Name of Product</div>
+                    <div className="text-center my-auto p-2 bg-slate-400 border-t-2 border-b-2 border-slate-700">Quantity</div>
+                    <div className="text-center my-auto p-2 bg-slate-400 border-2 border-slate-700 rounded-tr-lg">Action</div>
+                    {
+                        this.props.cartItems.map((item, idx) => <CartItemView removeItem={item => this.removeItem(item)} key={idx} cartItem={item} />)
+                    }
+                </div>
+                <div className="relative">
+                    <button className="btn absolute right-0 w-1/4">Place Order</button>
+                </div>
+            </>
         );
     }
 }
@@ -232,9 +248,32 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
     }
 
     addItemToCart(item: CartItem) {
-        this.setState(prevState => ({
-            cartItems: [...prevState.cartItems, item]
-        }));
+        const items = this.state.cartItems;
+
+        const index = items.findIndex(cartItem => cartItem.product.id === item.product.id);
+        if (index < 0) {
+            this.setState(prev => ({
+                cartItems: [...prev.cartItems, item]
+            }));
+        } else {
+            item.quanity += items[index].quanity;
+
+            this.setState({
+                cartItems: [...items.slice(0, index), item, ...items.slice(index + 1)]
+            });
+        }
+    }
+
+    removeItemFromCart(item: CartItem): void {
+        const items = this.state.cartItems;
+
+        const index = items.findIndex(cartItem => cartItem.product.id === item.product.id);
+
+        if (index >= 0) {
+            this.setState({
+                cartItems: [...items.slice(0, index), ...items.slice(index + 1)]
+            });
+        }
     }
 
     render(): ReactNode {
@@ -246,7 +285,7 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
                 break;
 
             default:
-                mainContent = <CartView cartItems={this.state.cartItems} />;
+                mainContent = <CartView removeItem={item => this.removeItemFromCart(item)} cartItems={this.state.cartItems} />;
                 break;
         }
 
