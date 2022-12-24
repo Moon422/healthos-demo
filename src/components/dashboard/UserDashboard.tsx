@@ -60,10 +60,33 @@ export type Product = {
     price: number
 };
 
-class ProductListItem extends Component<{ product: Product }> {
+class ProductDetailsView extends Component<{ product: Product, backBtnCallback: () => void }> {
+    onBackClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
+        e.preventDefault();
+        this.props.backBtnCallback();
+    }
+
     render(): ReactNode {
         return (
-            <div className="bg-slate-400 hover:cursor-pointer rounded-2xl p-4 mt-4 bg-opacity-25 hover:shadow-2xl hover:bg-opacity-60">
+            <div>
+                <button onClick={e => this.onBackClicked(e)} className="btn">back</button>
+                <h1>{this.props.product.name}</h1>
+            </div>
+        )
+    }
+}
+
+
+class ProductListItem extends Component<{ product: Product, clickCallback: (prod: Product) => void }> {
+    onItemClicked(e: ReactMouseEvent<HTMLDivElement, MouseEvent>): void {
+        e.preventDefault();
+        this.props.clickCallback(this.props.product);
+    }
+
+    render(): ReactNode {
+        return (
+            <div className="bg-slate-400 hover:cursor-pointer rounded-2xl p-4 mt-4 bg-opacity-25 hover:shadow-2xl hover:bg-opacity-60"
+                onClick={(e) => this.onItemClicked(e)}>
                 <div className="text-4xl py-6 text-center">{this.props.product.name}</div>
                 <div className="truncate">{this.props.product.description}</div>
                 <div>Stock: {this.props.product.quantity}</div>
@@ -73,8 +96,8 @@ class ProductListItem extends Component<{ product: Product }> {
     }
 }
 
-class ProductList extends Component<{ user: User }, { products: Product[] }> {
-    state: { products: Product[] } = {
+class ProductList extends Component<{ user: User }, { products: Product[], selectedProduct?: Product }> {
+    state: { products: Product[], selectedProduct?: Product } = {
         products: []
     }
 
@@ -97,12 +120,22 @@ class ProductList extends Component<{ user: User }, { products: Product[] }> {
         }
     }
 
+    showProductDetails(prod?: Product): void {
+        this.setState({
+            selectedProduct: prod
+        });
+    }
+
     render(): ReactNode {
+        if (this.state.selectedProduct) {
+            return <ProductDetailsView product={this.state.selectedProduct} backBtnCallback={() => this.showProductDetails(undefined)} />
+        }
+
         return (
             <div className="container">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                     {this.state.products.map((prod, idx) => {
-                        return <ProductListItem key={idx} product={prod} />
+                        return <ProductListItem key={idx} product={prod} clickCallback={prod => this.showProductDetails(prod)} />
                     })}
                 </div>
             </div>
