@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { Component, ReactNode, MouseEvent as ReactMouseEvent } from "react";
 import { User } from "../../App";
 import { loadProducts } from "../../Helpers";
@@ -57,7 +58,8 @@ export type Product = {
     name: string,
     description: string,
     quantity: number,
-    price: number
+    price: number,
+    image: string
 };
 
 class ProductDetailsView extends Component<{ product: Product, backBtnCallback: () => void }> {
@@ -69,8 +71,22 @@ class ProductDetailsView extends Component<{ product: Product, backBtnCallback: 
     render(): ReactNode {
         return (
             <div>
-                <button onClick={e => this.onBackClicked(e)} className="btn">back</button>
-                <h1>{this.props.product.name}</h1>
+                <button onClick={e => this.onBackClicked(e)} className="btn my-2">back</button>
+
+                <div className="flex space-x-6">
+                    <img src={this.props.product.image} alt="product image" className="rounded-xl" />
+                    <div>
+                        <h1>{this.props.product.name}</h1>
+                        <p>{this.props.product.description}</p>
+                        <p>Instock: {this.props.product.quantity}</p>
+                        <p>Price: ${this.props.product.price}</p>
+                        <div className="flex space-x-4 my-2">
+                            <button className="h-10 px-6 font-semibold rounded-md bg-black text-white">Add to Cart</button>
+                            <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         )
     }
@@ -85,12 +101,15 @@ class ProductListItem extends Component<{ product: Product, clickCallback: (prod
 
     render(): ReactNode {
         return (
-            <div className="bg-slate-400 hover:cursor-pointer rounded-2xl p-4 mt-4 bg-opacity-25 hover:shadow-2xl hover:bg-opacity-60"
+            <div className="bg-slate-400 hover:cursor-pointer rounded-2xl p-6 mt-4 bg-opacity-25 hover:shadow-2xl hover:bg-opacity-60"
                 onClick={(e) => this.onItemClicked(e)}>
-                <div className="text-4xl py-6 text-center">{this.props.product.name}</div>
-                <div className="truncate">{this.props.product.description}</div>
-                <div>Stock: {this.props.product.quantity}</div>
-                <div>Price: ${this.props.product.price}</div>
+                <img src={this.props.product.image} alt="product picture" className="w-full rounded-xl" />
+                <div>
+                    <div className="text-4xl py-6 text-center">{this.props.product.name}</div>
+                    <div className="truncate">{this.props.product.description}</div>
+                    <div>Stock: {this.props.product.quantity}</div>
+                    <div>Price: ${this.props.product.price}</div>
+                </div>
             </div>
         )
     }
