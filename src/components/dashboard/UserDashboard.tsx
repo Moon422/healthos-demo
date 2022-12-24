@@ -80,10 +80,11 @@ class ProductDetailsView extends Component<{ product: Product, backBtnCallback: 
                         <p>{this.props.product.description}</p>
                         <p>Instock: {this.props.product.quantity}</p>
                         <p>Price: ${this.props.product.price}</p>
-                        <div className="flex space-x-4 my-2">
-                            <button className="h-10 px-6 font-semibold rounded-md bg-black text-white">Add to Cart</button>
-                            <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900">Buy Now</button>
-                        </div>
+                        <form className="flex space-x-4 my-2">
+                            <input type="number" name="quantity" id="quantity" className="rounded border-slate-300 border-2 p-1" placeholder="Quanity" />
+                            <button type="submit" className="h-10 px-6 font-semibold rounded-md bg-black text-white hover:ring-4">Add to Cart</button>
+                            <button className="h-10 px-6 font-semibold rounded-md border border-slate-200 text-slate-900 hover:ring-4">Buy Now</button>
+                        </form>
                     </div>
                 </div>
 
