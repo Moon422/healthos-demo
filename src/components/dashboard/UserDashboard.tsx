@@ -52,7 +52,7 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void, select
     }
 }
 
-type Product = {
+export type Product = {
     id: number,
     name: string,
     description: string,
