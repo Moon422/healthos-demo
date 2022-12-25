@@ -1,5 +1,5 @@
 import { User } from "./App";
-import { CartItem } from "./components/dashboard/UserDashboard";
+import { CartItem, Product } from "./components/dashboard/UserDashboard";
 
 export const HOST_URL = "https://6av79h.deta.dev";
 
@@ -26,7 +26,7 @@ export async function verifyUser(token: string, callback: (u: User) => void) {
     }
 }
 
-export async function loadProducts(token: string) {
+export async function loadProducts(token: string): Promise<Product[]> {
     const url = `${HOST_URL}/products`;
     const response = await fetch(url, {
         method: "GET",
@@ -64,4 +64,43 @@ export async function placeOrder(user: User, items: CartItem[]) {
     }
 
     console.log(await response.json());
+}
+
+export async function updateProduct(user: User, product: Product) {
+    const url = `${HOST_URL}/products/${product.id}`;
+
+    const response = await fetch(url, {
+        headers: {
+            "content-type": "application/json",
+            "authorization": `Bearer ${user.token}`,
+        },
+        method: "PATCH",
+        body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+        return await response.json();
+    }
+
+    throw new Error("Error updating product");
+}
+
+export async function addNewProduct(user: User, product: Product): Promise<Product> {
+    const url = `${HOST_URL}/products`;
+
+    const response = await fetch(url, {
+        headers: {
+            "content-type": "application/json",
+            "authorization": `Bearer ${user.token}`,
+        },
+        method: "POST",
+        body: JSON.stringify(product)
+    });
+
+    if (response.ok) {
+        const newProd = await response.json();
+        return newProd;
+    }
+
+    throw new Error("Error creating product");
 }

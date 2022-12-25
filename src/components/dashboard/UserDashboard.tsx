@@ -53,12 +53,12 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void, select
 }
 
 export type Product = {
-    id: number,
+    id?: number,
     name: string,
     description: string,
     quantity: number,
     price: number,
-    image: string
+    image?: string
 };
 
 class ProductDetailsView extends Component<{ product: Product, backBtnCallback: () => void, onProductAddToCart: (item: CartItem) => void }> {
