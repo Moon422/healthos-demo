@@ -15,7 +15,6 @@ class UserNav extends Component<{ user: User, logoutCallback: () => void, select
 
     onMenuItemClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>, menuItem: MenuItems): void {
         e.preventDefault();
-        console.log("clicked");
         this.props.selectedItemChanged(menuItem);
     }
 

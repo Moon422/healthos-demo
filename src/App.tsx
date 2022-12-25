@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Auth } from './components/auth/Auth';
+import { AdminDashboard } from './components/dashboard/AdminDashboard';
 import { UserDashboard } from './components/dashboard/UserDashboard';
 import { verifyUser } from './Helpers';
 
@@ -52,7 +53,7 @@ class App extends Component<{}, AppState> {
 			if (this.state.user.userType === UserTypes.NORMAL) {
 				return <UserDashboard user={this.state.user} logoutCallback={() => this.logout()} />
 			} else {
-
+				return <AdminDashboard activeUser={this.state.user} />
 			}
 		}
 
