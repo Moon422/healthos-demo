@@ -15,6 +15,7 @@ export class User {
 	public firstName: string = "";
 	public lastName: string = "";
 	public userType: UserTypes = UserTypes.NORMAL;
+	public phoneNumber?: string = "";
 	public token: string = "";
 }
 

@@ -15,9 +15,10 @@ export async function verifyUser(token: string, callback: (u: User) => void) {
         const payload = await response.json();
 
         const user: User = {
-            firstName: payload.first_name,
-            lastName: payload.last_name,
-            userType: payload.user_type,
+            firstName: payload.firstName,
+            lastName: payload.lastName,
+            userType: payload.userType,
+            phoneNumber: payload.auth.phone_number,
             token
         };
         callback(user);
@@ -103,4 +104,22 @@ export async function addNewProduct(user: User, product: Product): Promise<Produ
     }
 
     throw new Error("Error creating product");
+}
+
+export async function getCustomers(user: User): Promise<User[]> {
+    const url = `${HOST_URL}/customers`;
+    const headers = {
+        "authorization": `Bearer ${user.token}`
+    };
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers,
+    });
+
+    if (response.ok) {
+        return await response.json();
+    }
+
+    throw new Error("Error loading customers");
 }
