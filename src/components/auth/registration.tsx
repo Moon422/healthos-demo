@@ -14,6 +14,7 @@ export class Registration extends Component<RegistrationProps> {
         const body = {
             firstName: formdata.get("firstname"),
             lastName: formdata.get("lastname"),
+            phoneNumber: formdata.get("rg-phone"),
             auth: {
                 phone_number: formdata.get("rg-phone"),
                 password: formdata.get("rg-password")

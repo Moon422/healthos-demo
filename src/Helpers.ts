@@ -1,4 +1,5 @@
 import { User } from "./App";
+import { Order } from "./components/dashboard/AdminDashboard";
 import { CartItem, Product } from "./components/dashboard/UserDashboard";
 
 export const HOST_URL = "https://6av79h.deta.dev";
@@ -18,7 +19,7 @@ export async function verifyUser(token: string, callback: (u: User) => void) {
             firstName: payload.firstName,
             lastName: payload.lastName,
             userType: payload.userType,
-            phoneNumber: payload.auth.phone_number,
+            phoneNumber: payload.phoneNumber,
             token
         };
         callback(user);
@@ -122,4 +123,20 @@ export async function getCustomers(user: User): Promise<User[]> {
     }
 
     throw new Error("Error loading customers");
+}
+
+export async function getOrders(user: User): Promise<Order[]> {
+    const url = `${HOST_URL}/orders`;
+    const response = await fetch(url, {
+        headers: {
+            "authorization": `Bearer ${user.token}`
+        },
+        method: "GET"
+    });
+
+    if (response.ok) {
+        return await response.json();
+    }
+
+    throw new Error("Error loading order list");
 }

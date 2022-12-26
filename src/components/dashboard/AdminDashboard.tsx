@@ -1,7 +1,7 @@
 import { Component, FormEvent, MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import { User } from "../../App";
-import { addNewProduct, getCustomers, loadProducts, updateProduct } from "../../Helpers";
-import { Product } from "./UserDashboard";
+import { addNewProduct, getCustomers, getOrders, loadProducts, updateProduct } from "../../Helpers";
+import { CartItem, Product } from "./UserDashboard";
 import { Registration } from "../auth/registration";
 
 enum MenuItems {
@@ -159,6 +159,7 @@ class ProductView extends Component<{ activeUser: User, }, { products: Product[]
                         )
                     }
                 )}
+                <h1>Add New Product</h1>
                 <form className="flex pt-1" onSubmit={e => this.onAddFormSubmit(e)}>
                     <input className="rounded border-slate-300 border-2 p-1 w-1/5 max-h-10" type="text" name="name" id="name" placeholder="Name" />
                     <textarea className="rounded border-slate-300 border-2 p-1 w-1/5" name="desc" id="desc" placeholder="Description" />
@@ -226,6 +227,65 @@ class CustomerView extends Component<{ activeUser: User }, { customers: User[] }
     }
 }
 
+export type Order = {
+    id: string,
+    customer: User,
+    items: CartItem[]
+};
+
+class OrderView extends Component<{ activeUser: User }, { orders: Order[] }> {
+    state: { orders: Order[] } = {
+        orders: []
+    };
+
+    async componentDidMount(): Promise<void> {
+        const orders = await getOrders(this.props.activeUser);
+        console.log(orders);
+        this.setState({
+            orders: orders
+        });
+    }
+
+    render(): ReactNode {
+        if (this.state.orders.length <= 0) {
+            return (
+                <p>Loading Orders...</p>
+            )
+        }
+
+        let orderElements: JSX.Element[] = [];
+
+        this.state.orders.forEach((order, ord_index) => {
+            orderElements.push(...order.items.map((item, item_index) => {
+                return (
+                    <div className="flex" key={ord_index * 10 + item_index}>
+                        <div className="w-2/5">
+                            {item.product.name}
+                        </div>
+                        <div className="w-2/5">
+                            {`${order.customer.firstName} ${order.customer.lastName}`}
+                        </div>
+                        <div className="w-1/5">
+                            {order.customer.phoneNumber}
+                        </div>
+                    </div>
+                )
+            }));
+        })
+
+        return (
+            <div className="py-2 mx-auto">
+                <div className="flex">
+                    <div className="w-2/5 text-center my-auto p-2 bg-slate-400 border-2 border-slate-700 rounded-tl-lg">Product Name</div>
+                    <div className="w-2/5 text-center my-auto p-2 bg-slate-400 border-2 border-l-0 border-slate-700">Customer Name</div>
+                    <div className="w-1/5 text-center my-auto p-2 bg-slate-400 border-2 border-l-0 border-slate-700 rounded-tr-lg">Customer Phone Number</div>
+                </div>
+                {orderElements}
+            </div>
+        )
+    }
+}
+
 export class AdminDashboard extends Component<{ activeUser: User }, { currentView: MenuItems }> {
     state: { currentView: MenuItems } = {
         currentView: MenuItems.HOME
@@ -245,7 +305,7 @@ export class AdminDashboard extends Component<{ activeUser: User }, { currentVie
                 mainContent = <CustomerView activeUser={this.props.activeUser} />
                 break;
             case MenuItems.ORDERS:
-                mainContent = <h1>ORDERS</h1>
+                mainContent = <OrderView activeUser={this.props.activeUser} />
                 break;
             case MenuItems.PRODUCTS:
                 mainContent = <ProductView activeUser={this.props.activeUser} />
