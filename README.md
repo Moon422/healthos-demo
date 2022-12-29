@@ -28,3 +28,4 @@ In order to buy a product, we have to go to product details page and enter the q
 
 <h3>User Cart Page</h3>
 <img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-27-14%20React%20App.png?raw=true"/>
+Cart page displays all the products that are added to the cart. Clicking on "Remove" button will the remove the item from cart and clicking on "Place Order" button will place the order.
