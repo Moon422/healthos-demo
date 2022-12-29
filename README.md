@@ -19,4 +19,4 @@ You either use the registration page to create a new account or use the dummy ac
 <li>Phone: 01700000000</li>
 <li>Password: 123456</li>
 </ul>
-![Screenshot 2022-12-29 at 12-16-09 React App](https://user-images.githubusercontent.com/90880886/209911892-0458385f-40e3-4ed5-9558-3f8e0d03b3e8.png)
+<img src="https://user-images.githubusercontent.com/90880886/209911892-0458385f-40e3-4ed5-9558-3f8e0d03b3e8.png" />
