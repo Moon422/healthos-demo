@@ -4,7 +4,7 @@ import './App.css';
 import { Auth } from './components/auth/Auth';
 import { AdminDashboard } from './components/dashboard/AdminDashboard';
 import { UserDashboard } from './components/dashboard/UserDashboard';
-import { verifyUser } from './Helpers';
+import { verifyUser } from './utils/Helpers';
 import { User, UserTypes } from './utils/Types';
 
 type AppState = {

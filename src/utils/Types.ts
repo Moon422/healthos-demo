@@ -19,3 +19,23 @@ export type NavMenuItems = {
     text: string,
     itemType: MenuItems
 }
+
+export type Product = {
+    id?: number,
+    name: string,
+    description: string,
+    quantity: number,
+    price: number,
+    image?: string
+};
+
+export type CartItem = {
+    product: Product,
+    quanity: number
+};
+
+export type Order = {
+    id: string,
+    customer: User,
+    items: CartItem[]
+};

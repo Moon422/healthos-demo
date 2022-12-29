@@ -1,5 +1,5 @@
 import { Component, FormEvent, ReactNode } from "react";
-import { HOST_URL, verifyUser } from "../../Helpers";
+import { HOST_URL, verifyUser } from "../../utils/Helpers";
 import { User } from "../../utils/Types";
 
 type LoginProps = {

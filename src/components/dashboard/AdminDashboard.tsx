@@ -1,54 +1,8 @@
 import { Component, FormEvent, MouseEvent as ReactMouseEvent, ReactNode } from "react";
-import { MenuItems, User } from "../../utils/Types";
-import { addNewProduct, getCustomers, getOrders, loadProducts, updateProduct } from "../../Helpers";
-import { CartItem, Product } from "./UserDashboard";
+import { MenuItems, Order, Product, User } from "../../utils/Types";
+import { addNewProduct, getCustomers, getOrders, loadProducts, updateProduct } from "../../utils/Helpers";
 import { Registration } from "../auth/registration";
 import { NavBar } from "../shared/NavBar";
-
-
-class AdminNav extends Component<{ activeUser: User, logoutCallback: () => void, selectedItem: MenuItems, selectedItemChanged: (item: MenuItems) => void }> {
-    onLogoutBtnClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
-        e.preventDefault();
-        this.props.logoutCallback();
-    }
-
-    onMenuItemClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>, item: MenuItems): void {
-        e.preventDefault();
-        this.props.selectedItemChanged(item);
-    }
-
-    render(): ReactNode {
-        const menuItems = [
-            { text: "Home", itemType: MenuItems.HOME },
-            { text: "Customers", itemType: MenuItems.CUSTOMERS },
-            { text: "Orders", itemType: MenuItems.ORDERS },
-            { text: "Products", itemType: MenuItems.PRODUCTS },
-        ];
-
-        const menuButtons = menuItems.map((item, idx) =>
-            <button key={idx} onClick={e => this.onMenuItemClicked(e, item.itemType)}
-                className={`hover:cursor-pointer hover:font-bold ${item.itemType === this.props.selectedItem ? "menu-item-active" : ""}`}>
-                {item.text}
-            </button>);
-
-        return (
-            <div className="flex items-center bg-Limegreen p-6 py-12 justify-between">
-                <div className="text-4xl">HealthOS Admin</div>
-                <div className="space-x-6">
-                    {menuButtons}
-                </div>
-                <div className="flex space-x-6">
-                    <div className="my-auto">
-                        Logged in as {this.props.activeUser.firstName + " " + this.props.activeUser.lastName}
-                    </div>
-                    <button onClick={e => this.onLogoutBtnClicked(e)} className="logout-btn">
-                        Logout
-                    </button>
-                </div>
-            </div>
-        )
-    }
-}
 
 class ProductView extends Component<{ activeUser: User, }, { products: Product[] }> {
     state: { products: Product[] } = {
@@ -224,12 +178,6 @@ class CustomerView extends Component<{ activeUser: User }, { customers: User[] }
         )
     }
 }
-
-export type Order = {
-    id: string,
-    customer: User,
-    items: CartItem[]
-};
 
 class OrderView extends Component<{ activeUser: User }, { orders: Order[] }> {
     state: { orders: Order[] } = {

@@ -1,16 +1,9 @@
 import { Component, ReactNode, MouseEvent as ReactMouseEvent, FormEvent } from "react";
 import { NavBar } from "../shared/NavBar";
-import { User, MenuItems, NavMenuItems } from "../../utils/Types";
-import { loadProducts, placeOrder } from "../../Helpers";
+import { User, MenuItems, NavMenuItems, Product, CartItem } from "../../utils/Types";
+import { loadProducts, placeOrder } from "../../utils/Helpers";
 
-export type Product = {
-    id?: number,
-    name: string,
-    description: string,
-    quantity: number,
-    price: number,
-    image?: string
-};
+
 
 class ProductDetailsView extends Component<{ product: Product, backBtnCallback: () => void, onProductAddToCart: (item: CartItem) => void }> {
     onBackClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
@@ -129,11 +122,6 @@ class ProductList extends Component<{ user: User, onProductAddToCart: (item: Car
         )
     }
 }
-
-export type CartItem = {
-    product: Product,
-    quanity: number
-};
 
 class CartItemView extends Component<{ cartItem: CartItem, removeItem: (item: CartItem) => void }> {
     onBtnClick(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
