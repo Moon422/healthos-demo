@@ -22,4 +22,4 @@ You either use the registration page to create a new account or use the dummy ac
 <img src="https://user-images.githubusercontent.com/90880886/209911892-0458385f-40e3-4ed5-9558-3f8e0d03b3e8.png" />
 At the top, we have two navigation buttons: one for the product page and other for the cart page. All the products are displayed at the product page and all the products added to cart are displayed at the cart page. Each product item at the prodcut page is card that displays product image, product name, description, products in stock and price.
 
-<h5>Product Details Page</h5>
+<h4>Product Details Page</h4>
