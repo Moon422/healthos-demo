@@ -1,6 +1,6 @@
-import { User } from "./App";
 import { Order } from "./components/dashboard/AdminDashboard";
 import { CartItem, Product } from "./components/dashboard/UserDashboard";
+import { User } from "./utils/Types";
 
 export const HOST_URL = "https://6av79h.deta.dev";
 

@@ -5,19 +5,7 @@ import { Auth } from './components/auth/Auth';
 import { AdminDashboard } from './components/dashboard/AdminDashboard';
 import { UserDashboard } from './components/dashboard/UserDashboard';
 import { verifyUser } from './Helpers';
-
-enum UserTypes {
-	NORMAL = "normal",
-	ADMIN = "admin"
-}
-
-export class User {
-	public firstName: string = "";
-	public lastName: string = "";
-	public userType: UserTypes = UserTypes.NORMAL;
-	public phoneNumber?: string = "";
-	public token: string = "";
-}
+import { User, UserTypes } from './utils/Types';
 
 type AppState = {
 	user?: User
@@ -54,7 +42,7 @@ class App extends Component<{}, AppState> {
 			if (this.state.user.userType === UserTypes.NORMAL) {
 				return <UserDashboard user={this.state.user} logoutCallback={() => this.logout()} />
 			} else {
-				return <AdminDashboard activeUser={this.state.user} />
+				return <AdminDashboard activeUser={this.state.user} logoutCallback={() => this.logout()} />
 			}
 		}
 

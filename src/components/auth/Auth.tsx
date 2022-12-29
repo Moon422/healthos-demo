@@ -1,5 +1,6 @@
 import { Component, ReactNode } from "react";
-import { User } from "../../App";
+import { User } from "../../utils/Types";
+
 import { Login } from "./Login";
 import { Registration } from "./registration";
 // import "./style.css";

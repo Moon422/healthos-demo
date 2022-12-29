@@ -1,6 +1,6 @@
 import { Component, FormEvent, ReactNode } from "react";
-import { User } from "../../App";
 import { HOST_URL, verifyUser } from "../../Helpers";
+import { User } from "../../utils/Types";
 
 type LoginProps = {
     onLoginSucces: (u: User) => void
