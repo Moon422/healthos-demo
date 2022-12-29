@@ -1,12 +1,10 @@
 import { Component, FormEvent, MouseEvent as ReactMouseEvent, ReactNode } from "react";
-import { User } from "../../App";
+import { MenuItems, User } from "../../utils/Types";
 import { addNewProduct, getCustomers, getOrders, loadProducts, updateProduct } from "../../Helpers";
 import { CartItem, Product } from "./UserDashboard";
 import { Registration } from "../auth/registration";
+import { NavBar } from "../shared/NavBar";
 
-enum MenuItems {
-    HOME, CUSTOMERS, ORDERS, PRODUCTS
-}
 
 class AdminNav extends Component<{ activeUser: User, logoutCallback: () => void, selectedItem: MenuItems, selectedItemChanged: (item: MenuItems) => void }> {
     onLogoutBtnClicked(e: ReactMouseEvent<HTMLButtonElement, MouseEvent>): void {
@@ -286,7 +284,7 @@ class OrderView extends Component<{ activeUser: User }, { orders: Order[] }> {
     }
 }
 
-export class AdminDashboard extends Component<{ activeUser: User }, { currentView: MenuItems }> {
+export class AdminDashboard extends Component<{ activeUser: User, logoutCallback: () => void }, { currentView: MenuItems }> {
     state: { currentView: MenuItems } = {
         currentView: MenuItems.HOME
     };
@@ -298,6 +296,13 @@ export class AdminDashboard extends Component<{ activeUser: User }, { currentVie
     }
 
     render(): ReactNode {
+        const menuItems = [
+            { text: "Home", itemType: MenuItems.HOME },
+            { text: "Customers", itemType: MenuItems.CUSTOMERS },
+            { text: "Orders", itemType: MenuItems.ORDERS },
+            { text: "Products", itemType: MenuItems.PRODUCTS },
+        ];
+
         let mainContent: JSX.Element | undefined = undefined;
 
         switch (this.state.currentView) {
@@ -317,8 +322,7 @@ export class AdminDashboard extends Component<{ activeUser: User }, { currentVie
 
         return (
             <div>
-                <AdminNav activeUser={this.props.activeUser} logoutCallback={() => { }}
-                    selectedItem={this.state.currentView} selectedItemChanged={item => this.currentViewChangedTo(item)} />
+                <NavBar activeUser={this.props.activeUser} title="HealthOS Admin" menuItems={menuItems} selectedItem={this.state.currentView} selectedItemChanged={item => this.currentViewChangedTo(item)} logoutCallback={() => this.props.logoutCallback()} />
                 <div className="container mx-auto">
                     {mainContent}
                 </div>
