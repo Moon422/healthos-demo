@@ -9,6 +9,13 @@ At this moment, backend is not implemented. To run and view the project project,
 <code>npm start</code>
 
 <h3>Login/Registration Page</h3>
-This page will be displayed if user have not logged into his/her account yet from the current browser. From this page, he/she can login as well as create a new account if he/she does not have one.
+This page will be displayed if user have not logged into his/her account yet from the current browser. From this page, he/she can login as well as create a new account if he/she does not have one. User registration is functional. However, only normal users can register from here. Admin registration is not implemented.
 
 ![Screenshot 2022-12-22 at 13-17-11 React App](https://user-images.githubusercontent.com/90880886/209190095-6cdddba8-98f9-4483-ab4b-0ae03f895c5f.png)
+
+<h3>User Home Page</h3>
+You either use the registration page to create a new account or use the dummy accout. Credentials for dummy account are given below:
+<ul>
+<li>Phone: 01700000000</li>
+<li>Password: 123456</li>
+</ul>
