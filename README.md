@@ -7,6 +7,17 @@ At this moment, backend is not implemented. To run and view the project project,
 <code>cd healthos-demo</code><br>
 <code>npm install</code><br>
 <code>npm start</code>
+<h4>Credentials</h4>
+Normal User/Customer:
+<ul>
+  <li>Phone: 01700000000</li>
+  <li>Password: 123456</li>
+</ul>
+Admin:
+<ul>
+  <li>Phone: 01700000001</li>
+  <li>Password: 123456</li>
+</ul>
 
 <h3>Login/Registration Page</h3>
 This page will be displayed if user have not logged into his/her account yet from the current browser. From this page, he/she can login as well as create a new account if he/she does not have one. User registration is functional. However, only normal users can register from here. Admin registration is not implemented.
