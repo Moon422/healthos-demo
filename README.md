@@ -29,3 +29,12 @@ In order to buy a product, we have to go to product details page and enter the q
 <h3>User Cart Page</h3>
 <img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-27-14%20React%20App.png?raw=true"/>
 Cart page displays all the products that are added to the cart. Clicking on "Remove" button will the remove the item from cart and clicking on "Place Order" button will place the order.
+
+<h3>Admin Dashboard</h3>
+In our admin dashboard, navigation panel has four buttons: home, customers, orders and products. Home page has not been completed yet.
+
+<h3>Admin Customer Page</h3>
+<img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-32-00%20React%20App.png?raw=true" />
+Customer page shows list the registered customers and their phone numbers and form to add a new customer. In our customer list, each of the rows are forms that can be used to update existing customer details.
+
+<h3>Admin Order Page</h3>
