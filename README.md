@@ -38,3 +38,5 @@ In our admin dashboard, navigation panel has four buttons: home, customers, orde
 Customer page shows list the registered customers and their phone numbers and form to add a new customer. In our customer list, each of the rows are forms that can be used to update existing customer details.
 
 <h3>Admin Order Page</h3>
+It displays all the order that has been placed so far
+<img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-37-27%20React%20App.png?raw=true" />
