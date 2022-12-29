@@ -10,10 +10,9 @@ class CartItemView extends Component<{ cartItem: CartItem, removeItem: (item: Ca
 
     render(): ReactNode {
         return (
-            // <h1>{`${this.props.cartItem.product.name} ${this.props.cartItem.quanity}`}</h1>
             <>
                 <div className="col-span-8 border-2 border-t-0 border-slate-700 p-2">{this.props.cartItem.product.name}</div>
-                <div className="bg-slate-600 p-2 text-right border-b-2 border-slate-700 text-white">{this.props.cartItem.quanity}</div>
+                <div className="bg-slate-600 p-2 text-right border-b-2 border-slate-700 text-white">{this.props.cartItem.quantity}</div>
                 <div className="bg-slate-600 p-2 border-2 border-t-0 border-slate-700 text-white">
                     <button onClick={(e) => this.onBtnClick(e)} className="btn w-full">Remove</button>
                 </div>

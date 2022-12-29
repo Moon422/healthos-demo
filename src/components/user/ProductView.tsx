@@ -13,14 +13,14 @@ class ProductDetailsView extends Component<{ product: Product, backBtnCallback: 
 
         const formdata = new FormData(e.currentTarget);
 
-        const quanity = parseInt(formdata.get("quantity") as string);
-        if (isNaN(quanity) || quanity <= 0) {
+        const quantity = parseInt(formdata.get("quantity") as string);
+        if (isNaN(quantity) || quantity <= 0) {
             return;
         }
 
         this.props.onProductAddToCart({
             product: this.props.product,
-            quanity: quanity
+            quantity: quantity
         });
     }
 

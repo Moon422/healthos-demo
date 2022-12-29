@@ -26,7 +26,7 @@ export class UserDashboard extends Component<{ user: User, logoutCallback: () =>
                 cartItems: [...prev.cartItems, item]
             }));
         } else {
-            item.quanity += items[index].quanity;
+            item.quantity += items[index].quantity;
 
             this.setState({
                 cartItems: [...items.slice(0, index), item, ...items.slice(index + 1)]

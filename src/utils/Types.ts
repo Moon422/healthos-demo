@@ -31,7 +31,7 @@ export type Product = {
 
 export type CartItem = {
     product: Product,
-    quanity: number
+    quantity: number
 };
 
 export type Order = {

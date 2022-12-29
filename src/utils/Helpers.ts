@@ -56,7 +56,7 @@ export async function placeOrder(user: User, items: CartItem[]) {
             "authorization": `Bearer ${user.token}`
         },
         method: "POST",
-        body: JSON.stringify(items.map(i => ({ productId: i.product.id, quantity: i.quanity })))
+        body: JSON.stringify(items.map(i => ({ productId: i.product.id, quantity: i.quantity })))
     });
 
     if (!response.ok) {
