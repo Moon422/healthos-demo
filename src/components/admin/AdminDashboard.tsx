@@ -1,7 +1,7 @@
 import { Component, FormEvent, MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import { MenuItems, Order, Product, User } from "../../utils/Types";
 import { addNewProduct, getCustomers, getOrders, loadProducts, updateProduct } from "../../utils/Helpers";
-import { Registration } from "../auth/registration";
+import { Registration } from "../auth/Registration";
 import { NavBar } from "../shared/NavBar";
 
 class ProductView extends Component<{ activeUser: User, }, { products: Product[] }> {

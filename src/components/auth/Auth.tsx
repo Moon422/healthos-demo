@@ -2,7 +2,7 @@ import { Component, ReactNode } from "react";
 import { User } from "../../utils/Types";
 
 import { Login } from "./Login";
-import { Registration } from "./registration";
+import { Registration } from "./Registration";
 // import "./style.css";
 
 type AuthProps = {

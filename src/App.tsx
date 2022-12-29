@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import { Auth } from './components/auth/Auth';
-import { AdminDashboard } from './components/dashboard/AdminDashboard';
-import { UserDashboard } from './components/dashboard/UserDashboard';
+import { AdminDashboard } from './components/admin/AdminDashboard';
+import { UserDashboard } from './components/user/UserDashboard';
 import { verifyUser } from './utils/Helpers';
 import { User, UserTypes } from './utils/Types';
 
