@@ -24,3 +24,4 @@ At the top, we have two navigation buttons: one for the product page and other f
 
 <h4>Product Details Page</h4>
 <img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-23-32%20React%20App.png?raw=true" />
+In order to buy a product, we have to go to product details page and enter the quantity and click on "Add to Cart" button.
