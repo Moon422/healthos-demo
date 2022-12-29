@@ -23,3 +23,4 @@ You either use the registration page to create a new account or use the dummy ac
 At the top, we have two navigation buttons: one for the product page and other for the cart page. All the products are displayed at the product page and all the products added to cart are displayed at the cart page. Each product item at the prodcut page is card that displays product image, product name, description, products in stock and price.
 
 <h4>Product Details Page</h4>
+<img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-23-32%20React%20App.png?raw=true" />
