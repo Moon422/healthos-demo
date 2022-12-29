@@ -40,3 +40,8 @@ Customer page shows list the registered customers and their phone numbers and fo
 <h3>Admin Order Page</h3>
 It displays all the order that has been placed so far
 <img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-37-27%20React%20App.png?raw=true" />
+
+<h3>Admin Product Page</h3>
+It displays all the products and a form to add new product
+<img src="https://github.com/Moon422/healthos-demo/blob/main/Screenshot%202022-12-29%20at%2013-45-36%20React%20App.png?raw=true" />
+Each of the rows in the product list is a form that can be used to update a product information or remove it.
